@@ -88,7 +88,7 @@ def move(currentPos, currentDir):
             move([currentPos[0] - 1, currentPos[1]], "N")
             move([currentPos[0] + 1, currentPos[1]], "S")
 
-with open("Advent-of-Code/2023/solutions/files/day16input.txt", "r") as file:
+with open("Advent-of-Code/2023/files/day16input.txt", "r") as file:
     fileLines = file.readlines()
     emptymap = []
 

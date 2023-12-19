@@ -153,7 +153,7 @@ def removeBuffer():
         emptymap[i].pop(0)
         emptymap[i].pop()
 
-with open("Advent-of-Code/2023/solutions/files/day16input.txt", "r") as file:
+with open("Advent-of-Code/2023/files/day16input.txt", "r") as file:
     fileLines = file.readlines()
     emptymap = []
 
