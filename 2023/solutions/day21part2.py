@@ -130,3 +130,4 @@ def f(n):
 print(f(goal//n))
 
 # 602259568764234
+# Thanks to https://www.reddit.com/r/adventofcode/comments/18nevo3/2023_day_21_solutions/keat9hm/?context=3 for this function that saves me the effort of wolfram-alpha'ing every time I fuck up
