@@ -1,14 +1,11 @@
 import sys
-sys.setrecursionlimit(10000)
+sys.setrecursionlimit(3000)
 
 class Tree():
     def __init__(self):
         # node : neighbours
         self.nodes = {}
         self.nodeCount = 0
-
-        self.stack = []
-        self.visited = {}
     
     def addNode(self, node, neighbours):
         self.nodes[node] = neighbours
@@ -18,7 +15,7 @@ class Tree():
         return list(self.nodes.keys())
 
     def getNeighbours(self, node):
-        return self.nodes[node]
+        return list(self.nodes[node].keys())
 
     def displayNodes(self):
         for node in self.nodes:
@@ -30,17 +27,29 @@ class Tree():
         for twoNode in twoNeighborNodes:
             # print(len(self.nodes))
             neighbourNodes = self.nodes[twoNode]
-            beforeNode = neighbourNodes[0]
-            afterNode = neighbourNodes[1]
+            neighbourNodeKeys = self.getNeighbours(twoNode)
 
-            self.nodes[beforeNode][self.nodes[beforeNode].index(twoNode)] = afterNode
-            self.nodes[afterNode][self.nodes[afterNode].index(twoNode)] = beforeNode
+            beforeNode = neighbourNodeKeys[0]
+            beforeNodeWeight = neighbourNodes[neighbourNodeKeys[0]]
+
+            afterNode = neighbourNodeKeys[1]
+            afterNodeWeight = neighbourNodes[neighbourNodeKeys[1]]
+
+            #self.nodes[beforeNode][self.nodes[beforeNode].index(twoNode)] = afterNode
+            #self.nodes[afterNode][self.nodes[afterNode].index(twoNode)] = beforeNode
+
+            self.nodes[beforeNode].pop(twoNode)
+            self.nodes[beforeNode][afterNode] = beforeNodeWeight + afterNodeWeight
+
+            self.nodes[afterNode].pop(twoNode)
+            self.nodes[afterNode][beforeNode] = afterNodeWeight + beforeNodeWeight
+
             self.nodes.pop(twoNode)
             self.nodeCount -= 1
 
             twoNeighborNodes = [node for node in self.nodes if len(self.nodes[node]) == 2]
 
-with open("Advent-of-Code/2023/files/day23input.txt", "r") as file:
+with open("Advent-of-Code-2023/2023/files/day23input.txt", "r") as file:
     fileLines = file.readlines()
     grid = []
 
@@ -59,12 +68,12 @@ for i in range(len(grid)):
             continue
 
         elif grid[i][j] == ".":
-            neighbours = []
+            neighbours = {}
 
-            if i-1 in gridHeightRange and grid[i - 1][j] not in "#": neighbours.append((i-1, j))
-            if j+1 in gridWidthRange and grid[i][j + 1] not in "#": neighbours.append((i, j+1))
-            if i+1 in gridHeightRange and grid[i + 1][j] not in "#": neighbours.append((i+1, j))
-            if j-1 in gridWidthRange and grid[i][j - 1] not in "#": neighbours.append((i, j-1))
+            if i-1 in gridHeightRange and grid[i - 1][j] not in "#": neighbours[(i-1, j)] = 1
+            if j+1 in gridWidthRange and grid[i][j + 1] not in "#": neighbours[(i, j+1)] = 1
+            if i+1 in gridHeightRange and grid[i + 1][j] not in "#": neighbours[(i+1, j)] = 1
+            if j-1 in gridWidthRange and grid[i][j - 1] not in "#": neighbours[(i, j-1)] = 1
 
             maintree.addNode((i, j), neighbours)
 
@@ -75,30 +84,20 @@ print("current :", len(maintree.nodes))
 
 startNode = (0, 1)
 outputs = set()
-startUnvisited = maintree.getAllNodes()
+startVisited = set()
 
-def calculatePaths(tree, unvisited, currentNode, pathLength):
-    global outputs
-    #print(currentNode)
+def dfs(visited, graph, node, pathLength):
+    thisVisited = visited.copy()
 
-    thisUnvisited = unvisited.copy()
-    thisUnvisited.remove(currentNode)
+    if node not in thisVisited:
+        thisVisited.add(node)
 
-    currentNodeNeighbours = tree.getNeighbours(currentNode)
-    currentNodeNeighbours = [node for node in currentNodeNeighbours if node in thisUnvisited]
+        if node == (140, 139):
+            if len(outputs) > 0 and pathLength > max(outputs): print(pathLength)
+            outputs.add(pathLength)
 
-    # print(len(thisUnvisited), len(currentNodeNeighbours))
-    if currentNode == (140, 139):
-        # print(pathLength)
-        outputs.add(pathLength)
-        print(len(outputs))
-        return
-    
-    # print(currentNode, "->", currentNodeNeighbours)
-    for node in currentNodeNeighbours:
-        calculatePaths(tree, thisUnvisited, node, pathLength + 1)
+        for neighbour in graph.getNeighbours(node):
+            dfs(thisVisited, graph, neighbour, pathLength + graph.nodes[node][neighbour])
 
-calculatePaths(maintree, startUnvisited, startNode, 0)
-
-outputs = sorted(outputs)
-print(outputs[-1])
+dfs(startVisited, maintree, startNode, 0)
+print(">>>>", max(outputs), "<<<<")

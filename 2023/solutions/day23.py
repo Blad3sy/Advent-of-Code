@@ -66,7 +66,7 @@ class Tree():
  
         print(dist[(140, 139)])
 
-with open("Advent-of-Code/2023/files/day23input.txt", "r") as file:
+with open("Advent-of-Code-2023/2023/files/day23input.txt", "r") as file:
     fileLines = file.readlines()
     grid = []
 
