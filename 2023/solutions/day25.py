@@ -38,3 +38,9 @@ print(len(outputs[1][0]) * len(outputs[1][1]))
 
 # its a little cheaty, I don't care! I had to figure out how to use this library and it was not easy.
 # I read many articles.
+
+# If it was a normal day I probably would've written my own 
+# max-flow min-cut algorithm but because it's christmas day 
+# and i'm busy seeing family, I'm satisfied with this slightly
+# cheaty solution. Who knows, maybe I'll write that algorithm in
+# the next few days!! Again, this AOC was wonderful and fun!!
