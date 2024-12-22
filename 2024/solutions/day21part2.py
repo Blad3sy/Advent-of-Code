@@ -74,3 +74,9 @@ sum = 0
 for code in codes:
     sum += recurse(code, 27) * int(code[:3])
 print(sum)
+
+# Spent close to 5 hours failing on this one so in the end I used this comment
+# https://www.reddit.com/r/adventofcode/comments/1hj8380/comment/m34g89j/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+# and this person's solution
+# https://www.reddit.com/r/adventofcode/comments/1hj2odw/comment/m34rqwh/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+# to reverse engineer and figure out my own solution. (So only counting like, half credit.)
