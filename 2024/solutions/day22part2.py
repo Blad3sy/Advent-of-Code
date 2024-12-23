@@ -51,30 +51,6 @@ for i in range(2000):
         changes[j].append(price - prev)
         prices[j].append(price)
 
-'''maxsum = 0
-for i in range(len(secrets)):
-    now = datetime.now()
-    print(i + 1, "/", len(secrets))
-    changeList = changes[i]
-    
-    for nine in nines[i]:
-        breakout = False
-        index2 = nine
-        index1 = nine - 4
-
-        changeStr = changeList[index1:index2]
-
-        total = 0
-        for a in range(len(secrets)):
-            try:
-                index3 = find_sub_list(changeStr, changes[a])
-                total += prices[a][index3]
-            except ValueError: pass
-        if total > maxsum: maxsum = total
-    print(f"Estimated time remaining: {(datetime.now() - now) * (len(secrets) - i + 1)}")
-
-print(maxsum)'''
-
 maxsum = 0
 posibs = []
 for i in range(-9, 10):
@@ -109,8 +85,6 @@ for changeStr in posibs:
     count += 1
 
 print(maxsum)
-with open("2024/files/day22solution.txt", "w") as file:
-    file.write(str(maxsum))
 print((datetime.now() - starttime).total_seconds())
 
 # BRUTE FORCE ALWAYS WORKS!!!!!!! 12144 SECONDS TO RUN!!!!!!!!
