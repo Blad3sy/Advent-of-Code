@@ -148,3 +148,7 @@ swaps.sort()
 outputstr = ""
 for swap in swaps: outputstr += f"{swap},"
 print(outputstr[:-1])
+
+# Used this tutorial
+# https://www.reddit.com/r/adventofcode/comments/1hlhhjv/2024_day_24_part_2_python_need_help_getting_the/
+# And SOME of my own ideas and code
